@@ -1,38 +1,48 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import Select from 'components/Select';
 import Toast from 'components/Toast';
 // import useFederationUnity from 'services/useFederationUnity';
-import { useGetFederationUnitiesQuery } from 'services/useIbgeServices';
-import { changeFederationUnity } from 'store/slices';
+// import { useGetFederationUnitiesQuery } from 'services/useIbgeServices';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { useAppSelector } from 'hooks/useAppStore';
+import { getFederationUnitiesThunk } from 'store/actions';
 import './App.css';
 
 export default function App() {
-  const { data, error, isLoading } = useGetFederationUnitiesQuery();
+  // const { data, error, isLoading } = useGetFederationUnitiesQuery();
+  const dispatch = useAppDispatch();
+  // const [data, setData] = useState([]);
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState({
     title: '',
     description: '',
   });
 
-  const store = useSelector((store) => store);
+  const {
+    error: { error },
+    federationUnities: { data },
+  } = useAppSelector((store) => store);
 
 
   useEffect(() => {
-    if (error && 'status' in error) {
+    if (error) {
       setToastMessage({
         title: 'Network fail',
-        description: `There was a status code ${error.status} error`,
+        description: error,
       });
       setToastOpen(true);
     }
   }, [error]);
 
+  useEffect(() => {
+    dispatch(getFederationUnitiesThunk());
+  }, []);
+
   return (
     <div className="App">
       <h1>Selecting</h1>
-      <Select onChange={changeFederationUnity} data={data} placeholder="Estados"/>
+      <Select onChange={(value) => console.log(value)} data={data} placeholder="Estados"/>
 
       <Toast
         title={toastMessage.title}

@@ -1,28 +1,17 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { apiClient } from './httpClient';
 
 import type {
   CitiesTypes, FederationUnityTypes
 } from '@types';
 
-const URL = ' https://servicodados.ibge.gov.br/api/v1/localidades';
+export async function getFederationUnitiesService() {
+  const { data } = await apiClient.get<FederationUnityTypes>('/estados');
 
-export const ibgeApi = createApi({
-  reducerPath: 'ibgeApi',
-  baseQuery: fetchBaseQuery({ baseUrl: URL}),
-  endpoints: (builder) => ({
-    getFederationUnities: builder.query<FederationUnityTypes[], void>({
-      query: () => '/estados',
-    }),
+  return data;
+}
 
-    getCitiesByUfId: builder.query<CitiesTypes[], string>({
-      query: (id) => `estados/${id}/municipios`,
-    })
-  }),
-});
+export async function getCitiesService(federationUnityId: number) {
+  const { data } = await apiClient.get<CitiesTypes>(`/estados/${federationUnityId}/municipios`);
 
-
-
-export const {
-  useGetFederationUnitiesQuery,
-  useGetCitiesByUfIdQuery,
-} = ibgeApi;
+  return data;
+}

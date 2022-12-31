@@ -1,8 +1,8 @@
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 import * as RadixSelect from '@radix-ui/react-select';
-import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { Fragment } from 'react';
-import { useDispatch } from 'react-redux';
+
+import { useAppDispatch } from 'hooks/useAppDispatch';
 
 // import type { FederationUnityTypes } from 'services/useFederationUnity';
 
@@ -14,17 +14,17 @@ interface DataTypes {
 interface SelectProps {
   placeholder: string;
   data: DataTypes[] | undefined;
-  onChange: ActionCreatorWithPayload<string, string>;
+  onChange: (value: string) => void;
   isDisabled?: boolean;
   isLoading?: boolean;
 }
 
 export default function Select(props: SelectProps) {
   const { data, placeholder, onChange, isDisabled } = props;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   return (
-    <RadixSelect.Root disabled={isDisabled} onValueChange={(value) => dispatch(onChange(value))}>
+    <RadixSelect.Root disabled={isDisabled} onValueChange={(value) => onChange(value)}>
       <RadixSelect.Trigger className="SelectTrigger" aria-label={placeholder}>
         <RadixSelect.Value placeholder={placeholder} />
         <RadixSelect.Icon>
