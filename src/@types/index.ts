@@ -36,3 +36,9 @@ export interface CitiesTypes {
     }
   }
 }
+
+export interface DistrictsTypes {
+  id: number;
+  nome: string;
+  municipio: CitiesTypes;
+}

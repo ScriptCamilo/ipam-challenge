@@ -2,10 +2,6 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons
 import * as RadixSelect from '@radix-ui/react-select';
 import { Fragment } from 'react';
 
-import { useAppDispatch } from 'hooks/useAppDispatch';
-
-// import type { FederationUnityTypes } from 'services/useFederationUnity';
-
 interface DataTypes {
   id: number;
   nome: string;
@@ -13,15 +9,15 @@ interface DataTypes {
 
 interface SelectProps {
   placeholder: string;
-  data: DataTypes[] | undefined;
+  data: DataTypes[];
   onChange: (value: string) => void;
-  isDisabled?: boolean;
   isLoading?: boolean;
+  value?: string;
 }
 
 export default function Select(props: SelectProps) {
-  const { data, placeholder, onChange, isDisabled } = props;
-  const dispatch = useAppDispatch();
+  const { data, placeholder, onChange } = props;
+  const isDisabled = data?.length === 0;
 
   return (
     <RadixSelect.Root disabled={isDisabled} onValueChange={(value) => onChange(value)}>
@@ -40,7 +36,7 @@ export default function Select(props: SelectProps) {
 
           <RadixSelect.Viewport className="SelectViewport">
 
-            {data && data.map((item) => (
+            {data.map((item) => (
               <Fragment key={item.id}>
                 <RadixSelect.Item value={String(item.id)} className="SelectItem">
                   <RadixSelect.ItemText>

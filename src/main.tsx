@@ -1,9 +1,6 @@
-import * as Toast from '@radix-ui/react-toast';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
 
-import store from 'store';
 import { globalStyles } from 'styles/globalStyle';
 import App from './App';
 
@@ -11,10 +8,6 @@ globalStyles();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <Provider store={ store }>
-      <Toast.Provider swipeDirection="right">
-        <App />
-      </Toast.Provider>
-    </Provider>
+    <App />
   </React.StrictMode>,
 );
