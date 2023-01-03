@@ -1,4 +1,4 @@
-import { blue, gray, green, red, yellow } from '@radix-ui/colors';
+import { blackA, gray, green, mauve } from '@radix-ui/colors';
 import { createStitches, defaultThemeMap } from '@stitches/react';
 
 import { medias } from 'styles/screens.config';
@@ -16,11 +16,10 @@ export const {
   ...defaultThemeMap,
   theme: {
     colors: {
-      ...blue,
+      ...blackA,
       ...gray,
       ...green,
-      ...red,
-      ...yellow,
+      ...mauve,
     },
     fontSizes: {
       sm: '1.2rem',
@@ -67,6 +66,14 @@ export const {
       size10: '4rem',
     }
   },
+
+  utils: {
+    paddingHorizontal: (value: string) => ({
+      paddingRight: value,
+      paddingLeft: value,
+    }),
+  },
+
   media: {
     ...medias
   },

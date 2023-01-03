@@ -13,37 +13,23 @@ export const globalStyles = globalCss({
     fontSize: '62.5%',
     fontFamily: '"Inter", sans-serif',
     fontWeight: 500,
-  },
-
-  /* Chrome, Safari, Edge, Opera */
-  [`input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button`]: {
-    '-webkit-appearance': 'none',
-    margin: 0,
-  },
-
-  /* Firefox */
-  'input[type=number]': {
-    '-moz-appearance': 'textfield',
+    background: '$green4',
+    color: '$green12',
   },
 
   h1: {
-    fontSize: '$lg2x !important',
+    fontSize: '$lg2x',
   },
 
   h2: {
-    fontSize: '$lgx !important',
-
-    '@tablet': {
-      fontSize: '2rem !important',
-    },
+    fontSize: '$lgx',
   },
 
   h3: {
-    fontSize: '$lg !important',
+    fontSize: '$lg',
   },
 
   'p, button, label, input, div, span': {
-    fontSize: '$md !important'
+    fontSize: '$md'
   },
 });

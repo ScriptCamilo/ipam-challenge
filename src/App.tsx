@@ -4,8 +4,6 @@ import { Provider } from 'react-redux';
 import { store } from 'store';
 import Home from './pages/home';
 
-import './App.css';
-
 export default function App() {
 
   return (

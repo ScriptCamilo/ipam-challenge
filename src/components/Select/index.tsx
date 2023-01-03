@@ -1,6 +1,9 @@
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 import * as RadixSelect from '@radix-ui/react-select';
+import Loading from 'components/Loading';
 import { Fragment } from 'react';
+
+import { Content, Icon, Item, ItemIndicator, scrollButton, Separator, Trigger, Viewport } from './styles';
 
 interface DataTypes {
   id: number;
@@ -16,45 +19,49 @@ interface SelectProps {
 }
 
 export default function Select(props: SelectProps) {
-  const { data, placeholder, onChange } = props;
+  const { data, placeholder, isLoading, onChange } = props;
   const isDisabled = data?.length === 0;
 
   return (
     <RadixSelect.Root disabled={isDisabled} onValueChange={(value) => onChange(value)}>
-      <RadixSelect.Trigger className="SelectTrigger" aria-label={placeholder}>
-        <RadixSelect.Value placeholder={placeholder} />
-        <RadixSelect.Icon>
-          <ChevronDownIcon />
-        </RadixSelect.Icon>
-      </RadixSelect.Trigger>
+      <Trigger aria-label={placeholder}>
+        {isLoading ? <Loading /> : (
+          <>
+            <RadixSelect.Value placeholder={placeholder} />
+            <Icon>
+              <ChevronDownIcon />
+            </Icon>
+          </>
+        )}
+      </Trigger>
 
       <RadixSelect.Portal>
-        <RadixSelect.Content className="SelectContent">
-          <RadixSelect.ScrollUpButton className="SelectScrollButton">
+        <Content>
+          <RadixSelect.ScrollUpButton className={scrollButton()}>
             <ChevronUpIcon />
           </RadixSelect.ScrollUpButton>
 
-          <RadixSelect.Viewport className="SelectViewport">
-
-            {data.map((item) => (
+          <Viewport>
+            {data.map((item, index, items) => (
               <Fragment key={item.id}>
-                <RadixSelect.Item value={String(item.id)} className="SelectItem">
+                <Item value={String(item.id)}>
                   <RadixSelect.ItemText>
                     {item.nome}
                   </RadixSelect.ItemText>
-                  <RadixSelect.ItemIndicator className="SelectItemIndicator">
+                  <ItemIndicator>
                     <CheckIcon />
-                  </RadixSelect.ItemIndicator>
-                </RadixSelect.Item>
-                <RadixSelect.Separator className="SelectSeparator" />
+                  </ItemIndicator>
+                </Item>
+
+                {index !== items.length - 1 && <Separator />}
               </Fragment>
             ))}
+          </Viewport>
 
-          </RadixSelect.Viewport>
-          <RadixSelect.ScrollDownButton className="SelectScrollButton">
+          <RadixSelect.ScrollDownButton className={scrollButton()}>
             <ChevronDownIcon />
           </RadixSelect.ScrollDownButton>
-        </RadixSelect.Content>
+        </Content>
       </RadixSelect.Portal>
     </RadixSelect.Root>
   );

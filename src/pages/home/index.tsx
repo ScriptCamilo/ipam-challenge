@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import Districts from 'components/Districts';
 import Select from 'components/Select';
 import Toast from 'components/Toast';
 import { useAppDispatch } from 'hooks/useAppDispatch';
@@ -7,8 +8,8 @@ import { useAppSelector } from 'hooks/useAppStore';
 import { changeCity, changeFederationUnity, fetchCities, fetchDistricts, fetchUFS, resetCity } from 'store/slices';
 import { getValueById } from 'utils';
 
-import Districts from 'components/Districts';
-import { Form } from './styles';
+import Separator from 'components/Separator';
+import { Container, FormWrapper } from './styles';
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -73,10 +74,26 @@ export default function App() {
   }, [selectedValue, citiesStatus, citiesError, ufsStatus, ufsError]);
 
   return (
-    <Form>
-      <h1>Selecting</h1>
-      <Select onChange={handleChangeFederationUnity} data={ufs} placeholder="Estados"/>
-      <Select key={cities.toString()} onChange={handleChangeCity} data={cities} placeholder="Cidades"/>
+    <Container>
+      <FormWrapper>
+        <h1>IBGE Services</h1>
+        <Select
+          isLoading={ufsStatus === 'loading'}
+          onChange={handleChangeFederationUnity}
+          data={ufs}
+          placeholder="Estados"
+        />
+
+        <Select
+          key={cities.toString()}
+          isLoading={citiesStatus === 'loading'}
+          onChange={handleChangeCity}
+          data={cities}
+          placeholder="Cidades"
+        />
+      </FormWrapper>
+
+      <Separator orientation="vertical" decorative />
 
       <Districts />
 
@@ -86,8 +103,8 @@ export default function App() {
         open={toastOpen}
         setOpen={setToastOpen}
       >
-        <button className="Button small green">Done</button>
+        <button className="">Done</button>
       </Toast>
-    </Form>
+    </Container>
   );
 }
